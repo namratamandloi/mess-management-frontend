@@ -1,5 +1,5 @@
 import React from "react";
-import scannerImage from "../assets/scanner.jpeg";
+import scannerImage from "../assets/Namrata_Payment.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
