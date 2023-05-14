@@ -9,6 +9,7 @@ import { api } from "../../config";
 const endpoint = api.endPoint;
 
 const Register = () => {
+  const [loading,setLoading] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state.authReducer);
   console.log(state);
@@ -31,6 +32,7 @@ const Register = () => {
   const submit = async (e) => {
     e.preventDefault();
     console.log(userData);
+    setLoading(true);
     const response = await fetch(`${endpoint}/api/user/signup`, {
       method: "POST",
       headers: {
@@ -60,6 +62,7 @@ const Register = () => {
         },
       }).showToast();
     }
+    setLoading(false);
     dispatch({ type: "REGISTER", payload: response });
   };
   if (state.isAuthenticated) {
@@ -185,7 +188,7 @@ const Register = () => {
                               onClick={submit}
                               type="submit"
                             >
-                              Login
+                              {loading ? "Loading...." : "Register"}
                             </button>
                           </div>
                           <div class="col-12">

@@ -85,7 +85,7 @@ const Dashboard = () => {
 
                         <div class="d-flex align-items-center">
                           <div class="">
-                            <h6>112</h6>
+                            {/* <h6>112</h6> */}
                             <br />
                             <Link
                               to="/students"

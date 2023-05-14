@@ -12,6 +12,7 @@ console.log(endpoint);
 
 const Login = () => {
   const dispatch = useDispatch();
+  const [loading,setLoading] = useState(false);
   const state = useSelector((state) => state.authReducer);
   console.log(state);
   const [userData, setUserData] = useState({ email: "", password: "" });
@@ -24,35 +25,37 @@ const Login = () => {
   const submit = async (e) => {
     e.preventDefault();
     console.log(endpoint);
-    const response = await fetch(`${endpoint}/api/user/signin`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((data) => data.json())
-      .catch((err) => console.log(err));
-    console.log(response);
-    if (response.status == "ok") {
-      Toastify({
-        text: `${response.message}`,
-        className: "info",
-        close: true,
-        style: {
-          background: "green",
-        },
-      }).showToast();
-    } else {
-      Toastify({
-        text: `${response.error}`,
-        className: "info",
-        close: true,
-        style: {
-          background: "red",
-        },
-      }).showToast();
-    }
+setLoading(true);
+const response = await fetch(`${endpoint}/api/user/signin`, {
+  method: "POST",
+  headers: {
+    "content-type": "application/json",
+  },
+  body: JSON.stringify(userData),
+})
+.then((data) => data.json())
+.catch((err) => console.log(err));
+console.log(response);
+if (response.status == "ok") {
+  Toastify({
+    text: `${response.message}`,
+    className: "info",
+    close: true,
+    style: {
+      background: "green",
+    },
+  }).showToast();
+} else {
+  Toastify({
+    text: `${response.error}`,
+    className: "info",
+    close: true,
+    style: {
+      background: "red",
+    },
+  }).showToast();
+}
+setLoading(false);
     dispatch({ type: "LOGIN", payload: response });
   };
 
@@ -122,7 +125,7 @@ const Login = () => {
                             onClick={submit}
                             type="submit"
                           >
-                            Login
+                              {loading ? "Loading...." : "Login"}
                           </button>
                         </div>
                         <div class="col-12">
